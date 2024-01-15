@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1D3026E92B4FA57B00BF59E2 /* AddContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3026E82B4FA57B00BF59E2 /* AddContactView.swift */; };
+		1DFBF8D12B551201008522DC /* AddContactValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFBF8D02B551201008522DC /* AddContactValidation.swift */; };
+		1DFBF8D32B551913008522DC /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFBF8D22B551913008522DC /* AlertPresenter.swift */; };
 		CCADE2FE2B43A91C00E4EE30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCADE2FD2B43A91C00E4EE30 /* AppDelegate.swift */; };
 		CCADE3002B43A91C00E4EE30 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCADE2FF2B43A91C00E4EE30 /* SceneDelegate.swift */; };
 		CCADE3022B43A91C00E4EE30 /* ContactListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCADE3012B43A91C00E4EE30 /* ContactListView.swift */; };
@@ -41,6 +43,8 @@
 
 /* Begin PBXFileReference section */
 		1D3026E82B4FA57B00BF59E2 /* AddContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactView.swift; sourceTree = "<group>"; };
+		1DFBF8D02B551201008522DC /* AddContactValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactValidation.swift; sourceTree = "<group>"; };
+		1DFBF8D22B551913008522DC /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
 		CCADE2FA2B43A91C00E4EE30 /* contact-management.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "contact-management.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCADE2FD2B43A91C00E4EE30 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CCADE2FF2B43A91C00E4EE30 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -165,6 +169,8 @@
 			isa = PBXGroup;
 			children = (
 				CCD4C8D02B44EF3300B69E9F /* ContactList.swift */,
+				1DFBF8D22B551913008522DC /* AlertPresenter.swift */,
+				1DFBF8D02B551201008522DC /* AddContactValidation.swift */,
 				CCE27A8E2B44F2140051FFA8 /* ContactListStorage.swift */,
 				CCE27A902B4502060051FFA8 /* ContactListError.swift */,
 			);
@@ -307,6 +313,8 @@
 				CCE27A912B4502060051FFA8 /* ContactListError.swift in Sources */,
 				CCE27A8F2B44F2140051FFA8 /* ContactListStorage.swift in Sources */,
 				CCADE3022B43A91C00E4EE30 /* ContactListView.swift in Sources */,
+				1DFBF8D32B551913008522DC /* AlertPresenter.swift in Sources */,
+				1DFBF8D12B551201008522DC /* AddContactValidation.swift in Sources */,
 				CCADE2FE2B43A91C00E4EE30 /* AppDelegate.swift in Sources */,
 				CCADE3002B43A91C00E4EE30 /* SceneDelegate.swift in Sources */,
 			);

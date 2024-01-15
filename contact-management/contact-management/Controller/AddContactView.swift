@@ -9,6 +9,7 @@ import UIKit
 
 class AddContactView: UIViewController {
     private var contactListStorage: ContactListStorage?
+    private var alertPresenter: AlertPresenter!
     private var nameContact: String?
     private var phoneContact: String?
     private var ageContact: Int?
@@ -32,6 +33,8 @@ class AddContactView: UIViewController {
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        alertPresenter = AlertPresenter(viewController: self)
         setView()
     }
     
@@ -49,6 +52,25 @@ class AddContactView: UIViewController {
         else { throw ContactListError.ContactListWrongInput }
         return ContactList(name: name, phoneNumber: phone, age: age)
     }
+    
+    private func createContactFromInput() -> ContactList? {
+        guard let name = nameContact, isValidName(name),
+              let phone = phoneContact, isValidPhoneNumber(phone),
+              let age = ageContact, validateAge(age) else {
+            alertPresenter.showAlert("유효하지 않은 입력입니다.")
+            return nil
+        }
+        return ContactList(name: name, phoneNumber: phone, age: age)
+}
+    
+    private func addContact(_ contact: ContactList) {
+        do {
+            self.contactListStorage?.addContact(contact)
+            dismiss(animated: true)
+        } catch {
+            alertPresenter.showAlert("연락처를 추가하는데 문제가 생겼습니다.")
+        }
+    }
 }
 
 extension AddContactView {
@@ -57,12 +79,12 @@ extension AddContactView {
     }
     
     @IBAction func didWriteAge(_ age: UITextField) {
-        guard let age = age.text else {
-            return
+        if let ageText = ageTextField.text, let age = Int(ageText) {
+            ageContact = age
+        } else {
+            ageContact = nil
         }
-        ageContact = Int(age)
     }
-    
     @IBAction func didWritePhone(_ phone: UITextField) {
         phoneContact = phone.text
     }
@@ -72,22 +94,8 @@ extension AddContactView {
     }
     
     @IBAction func didTappedSave(_ sender: Any) {
-        do {
-            let unWrappedResult = try unWrappedSender(
-                name: nameContact,
-                phone: phoneContact,
-                age: ageContact
-            )
-            self.contactListStorage?.addContact(unWrappedResult)
-            print(contactListStorage!.getContact(3))
-        } catch {
-            print(error.localizedDescription)
-            return
+        if let contact = createContactFromInput() {
+            addContact(contact)
         }
     }
 }
-
-extension AddContactView {
-    
-}
-
