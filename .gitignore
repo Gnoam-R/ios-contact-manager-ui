@@ -31,5 +31,7 @@ Temporary Items
 # iCloud generated files
 *.icloud
 
-
+# Xcode
 *.xcuserstate
+**/Breakpoints.xcbkptlist
+*.xcbkptlist

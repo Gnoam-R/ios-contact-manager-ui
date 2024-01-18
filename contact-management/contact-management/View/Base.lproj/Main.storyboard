@@ -92,9 +92,6 @@
                                         <rect key="frame" x="64.333333333333343" y="0.0" width="308.66666666666663" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <action selector="didWriteName:" destination="juo-rO-sQn" eventType="editingDidEnd" id="Hc3-X9-8dY"/>
-                                        </connections>
                                     </textField>
                                 </subviews>
                                 <constraints>
@@ -114,9 +111,6 @@
                                         <rect key="frame" x="64.333333333333343" y="0.0" width="308.66666666666663" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <action selector="didWriteAge:" destination="juo-rO-sQn" eventType="editingDidEnd" id="8uO-GQ-1jE"/>
-                                        </connections>
                                     </textField>
                                 </subviews>
                                 <constraints>
@@ -136,9 +130,6 @@
                                         <rect key="frame" x="64.333333333333343" y="0.0" width="308.66666666666663" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <action selector="didWritePhone:" destination="juo-rO-sQn" eventType="editingDidEnd" id="cf8-ld-7Ug"/>
-                                        </connections>
                                     </textField>
                                 </subviews>
                                 <constraints>

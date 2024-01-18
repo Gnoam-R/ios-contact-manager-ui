@@ -26,7 +26,20 @@ final class ContactListView: UIViewController {
         self.title = "연락처"
         tableView.dataSource = self
         tableView.delegate = self
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(self.didDismissDetailNotification(_:)),
+            name: NSNotification.Name("ModalDismissNC"),
+            object: nil
+        )
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    
+    }
+    
     @IBAction func addContact(_ sender: Any) {
         let secondViewController = storyboard?.instantiateViewController(identifier: "AddContactView") { coder in
             return AddContactView.init(coder: coder, contactListStorage: self.contactListStorage!)
@@ -35,6 +48,12 @@ final class ContactListView: UIViewController {
         secondViewController?.modalPresentationStyle = .automatic
         let secondNavigationController = UINavigationController(rootViewController: secondViewController!)
         present(secondNavigationController, animated: true)
+    }
+    
+    @objc func didDismissDetailNotification(_ notification: Notification) {
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
 }
 

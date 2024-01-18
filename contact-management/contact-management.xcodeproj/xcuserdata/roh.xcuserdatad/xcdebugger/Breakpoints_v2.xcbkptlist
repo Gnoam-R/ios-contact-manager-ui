@@ -64,6 +64,21 @@
                   endingLineNumber = "0"
                   offsetFromSymbolStart = "16">
                </Location>
+               <Location
+                  uuid = "6F749A91-0B6A-48AC-ADA2-C6E7618E0429 - a4ea0bfc7cd3e915"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "contact_management.AddContactView.__deallocating_deinit"
+                  moduleName = "contact-management"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/roh/noam/ios-contact-manager-ui/contact-management/contact-management/Controller/AddContactView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "28">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddContactView: UIViewController {
+final class AddContactView: UIViewController {
     private var contactListStorage: ContactListStorage?
     private var alertPresenter: AlertPresenter!
     private var nameContact: String?
@@ -22,13 +22,17 @@ class AddContactView: UIViewController {
     @IBOutlet weak var ageTextField: UITextField!
     @IBOutlet weak var phoneTextField: UITextField!
     
+    private var phoneFormat: PhoneFormat?
+    
     required init?(coder: NSCoder) {
         self.contactListStorage = nil
+        phoneFormat = nil
         super.init(coder: coder)
     }
     
     init?(coder: NSCoder, contactListStorage: ContactListStorage) {
         self.contactListStorage = contactListStorage
+        phoneFormat = PhoneFormat.init(appenCharacter: "-")
         super.init(coder: coder)
     }
     
@@ -43,13 +47,19 @@ class AddContactView: UIViewController {
         nameLabel.text = "이름"
         ageLabel.text = "나이"
         phoneLabel.text = "연락처"
+        
+        nameTextField.addTarget(self, action: #selector(nameFieldDidChange(_:)), for: .editingChanged)
+        ageTextField.addTarget(self, action: #selector(ageFieldDidChange(_:)), for: .editingChanged)
+        phoneTextField.addTarget(self, action: #selector(phoneFieldDidChange(_:)), for: .editingChanged)
     }
     
     private func unWrappedSender(name: String?, phone: String?, age: Int?) throws -> ContactList {
         guard let name,
               let phone,
               let age
-        else { throw ContactListError.ContactListWrongInput }
+        else {
+            throw ContactListError.ContactListWrongInput
+        }
         return ContactList(name: name, phoneNumber: phone, age: age)
     }
     
@@ -74,28 +84,70 @@ class AddContactView: UIViewController {
 }
 
 extension AddContactView {
-    @IBAction func didWriteName(_ name: UITextField) {
-        nameContact = name.text
-    }
-    
-    @IBAction func didWriteAge(_ age: UITextField) {
-        if let ageText = ageTextField.text, let age = Int(ageText) {
-            ageContact = age
-        } else {
-            ageContact = nil
-        }
-    }
-    @IBAction func didWritePhone(_ phone: UITextField) {
-        phoneContact = phone.text
-    }
-    
     @IBAction func didTappedCancel(_ sender: Any){
-        dismiss(animated: true)
+        let cancel: AlertActionHandler = { [weak self] _ in
+            self?.dismiss(animated: true)
+        }
+        present(Alert.stopEditContact(cancel).alertController, animated: true)
     }
     
     @IBAction func didTappedSave(_ sender: Any) {
-        if let contact = createContactFromInput() {
-            addContact(contact)
+        let _ : AlertActionHandler = { [weak self] _ in
+            self?.dismiss(animated: true)
         }
+        do {
+            let unWrappedResult = try unWrappedSender(
+                name: nameContact,
+                phone: phoneContact,
+                age: ageContact
+            )
+            
+            let isNameValid = try ContactValidateCheck.name(unWrappedResult.name).check
+            let isAgeValid = try ContactValidateCheck.age(unWrappedResult.age).check
+            let isPhoneValid = try ContactValidateCheck.phone(unWrappedResult.phoneNumber).check
+            
+            if isNameValid,
+               isAgeValid,
+               isPhoneValid
+            {
+                self.contactListStorage?.addContact(unWrappedResult)
+                NotificationCenter.default.post(name: NSNotification.Name("ModalDismissNC"), object: nil, userInfo: nil)
+                self.dismiss(animated: true)
+            }
+        } 
+        catch ContactListError.ContactNameIsValid {
+            present(Alert.isCorrectName.alertController, animated: true)
+        } 
+        catch ContactListError.ContactAgeIsValid {
+            present(Alert.isCorrectAge.alertController, animated: true)
+        } 
+        catch ContactListError.ContactPhoneIsValid {
+            present(Alert.isCorrectPhone.alertController, animated: true)
+        } 
+        catch ContactListError.ContactListWrongInput {
+            present(Alert.isCorrectList.alertController, animated: true)
+        } 
+        catch {
+            return
+        }
+    }
+}
+
+extension AddContactView {
+    @objc func nameFieldDidChange(_ nameField: UITextField) {
+        nameContact = nameField.text
+    }
+    
+    @objc func ageFieldDidChange(_ ageField: UITextField) {
+        guard let age = ageField.text else {
+            return
+        }
+        ageContact = Int(age)
+    }
+    
+    @objc func phoneFieldDidChange(_ phoneField: UITextField) {
+        guard let phone = phoneField.text else { return }
+        phoneField.text = phoneFormat?.addCharacter(at: phone)
+        phoneContact = phoneField.text
     }
 }

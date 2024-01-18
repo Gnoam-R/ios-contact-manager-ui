@@ -8,4 +8,7 @@
 enum ContactListError: Error {
     case ContactListNotFound
     case ContactListWrongInput
+    case ContactNameIsValid
+    case ContactAgeIsValid
+    case ContactPhoneIsValid
 }
