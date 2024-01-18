@@ -39,6 +39,18 @@ final class ContactListView: UIViewController {
 }
 
 extension ContactListView: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            contactListStorage?.deleteContact(indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .none)
+        }
+    }
+    
     private func getContact(forID id: Int) -> ContactList? {
         guard let result = self.contactListStorage else {
             return nil
