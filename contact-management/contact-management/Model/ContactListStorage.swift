@@ -33,4 +33,10 @@ final class ContactListStorage {
     func countContactList() -> Int {
         return self.contactList.count
     }
+    
+    func filterContacts(by senderText: String) -> [ContactList] {
+        return contactList.filter { contact in
+            contact.name.lowercased().contains(senderText)
+        }
+    }
 }

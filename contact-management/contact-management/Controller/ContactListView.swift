@@ -10,6 +10,7 @@ import UIKit
 final class ContactListView: UIViewController {
     private var contactListStorage: ContactListStorage?
     @IBOutlet weak var tableView: UITableView!
+    var filteredArr: [ContactList] = []
     
     required init?(coder: NSCoder) {
         self.contactListStorage = nil
@@ -23,9 +24,10 @@ final class ContactListView: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "연락처"
         tableView.dataSource = self
         tableView.delegate = self
+        
+        setupSearchController()
         
         NotificationCenter.default.addObserver(
             self,
@@ -54,6 +56,33 @@ final class ContactListView: UIViewController {
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
         }
+    }
+    
+    func setupSearchController() {
+        // 서치바 컨트롤러의 초기화
+        let searchController = UISearchController(searchResultsController: nil)
+        // 서치바 내용 업데이트
+        searchController.searchResultsUpdater = self
+        // 네비게이션 타이틀 설정
+        self.navigationItem.title = "연락처"
+        // 서치바 플레이스 홀더 설정
+        searchController.searchBar.placeholder = "검색"
+        // 서치바 추가
+        self.navigationItem.searchController = searchController
+        // 서치바 항상 표시
+        self.navigationItem.hidesSearchBarWhenScrolling = false
+        
+        
+    }
+}
+
+extension ContactListView: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let text = searchController.searchBar.text?.lowercased() else {return}
+        // contactListStorage 배열을 필터링하여 searchText를 포함하는 요소들만 선택
+//        self.filteredArr = self.filteredArr.filter { $0.lowercased().contains(text) }
+        self.tableView.reloadData()
+        dump(text)
     }
 }
 
